@@ -1,1 +1,1 @@
-web: bin/hubot -a gitter -n hippololamus
+web: bin/hubot -a gitter2 -n hippololamus
