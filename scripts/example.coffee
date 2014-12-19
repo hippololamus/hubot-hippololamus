@@ -19,9 +19,10 @@ module.exports = (robot) ->
       }
     }
     request.get(options, (err, res, body) ->
-        message = body.data[0].link
-        msg.send message
-        );
+      body = JSON.parse(body)
+      message = body.data[0].link
+      msg.send message
+      );
 
   # robot.hear /badger/i, (msg) ->
   #   msg.send "Badgers? BADGERS? WE DON'T NEED NO STINKIN BADGERS"
