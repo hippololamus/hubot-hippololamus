@@ -7,7 +7,7 @@
 #   Uncomment the ones you want to try and experiment with.
 #
 #   These are from the scripting documentation: https://github.com/github/hubot/blob/master/docs/scripting.md
-var request = require('request');
+request = require('request');
 # 23ec11b10e51a12
 module.exports = (robot) ->
 
