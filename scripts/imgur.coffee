@@ -17,7 +17,8 @@ baseOptions = {
 
 module.exports = (robot) ->
 
-  robot.hear /what is on front page/i, (msg) ->
+  robot.hear /front page/i, (msg) ->
+    console.log('heard message: front page')
     baseOptions.url = 'https://api.imgur.com/3/gallery/hot/viral/0.json'
     request.get(baseOptions, (err, res, body) ->
       body = JSON.parse(body)
