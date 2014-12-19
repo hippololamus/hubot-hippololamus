@@ -15,7 +15,7 @@ module.exports = (robot) ->
     request.get('https://api.imgur.com/3/gallery/hot/viral/0.json', {
       'Authorization': 'Client-ID 23ec11b10e51a12'
       }, (err, res, body) ->
-        var message = ''
+        message = ''
         body[0].images.forEach (img) ->
           message += img.link + '\n'
         msg.send message
