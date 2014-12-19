@@ -7,8 +7,19 @@
 #   Uncomment the ones you want to try and experiment with.
 #
 #   These are from the scripting documentation: https://github.com/github/hubot/blob/master/docs/scripting.md
-
+var request = require('request');
+# 23ec11b10e51a12
 module.exports = (robot) ->
+
+  robot.hear /what is on front page/i, (msg) ->
+    request.get('https://api.imgur.com/3/gallery/hot/viral/0.json', {
+      'Authorization': 'Client-ID 23ec11b10e51a12'
+      }, (err, res, body) ->
+        var message = ''
+        body[0].images.forEach (img) ->
+          message += img.link + '\n'
+        msg.send message
+        );
 
   # robot.hear /badger/i, (msg) ->
   #   msg.send "Badgers? BADGERS? WE DON'T NEED NO STINKIN BADGERS"
