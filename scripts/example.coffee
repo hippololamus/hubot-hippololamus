@@ -12,9 +12,13 @@ request = require('request');
 module.exports = (robot) ->
 
   robot.hear /what is on front page/i, (msg) ->
-    request.get('https://api.imgur.com/3/gallery/hot/viral/0.json', {
-      'Authorization': 'Client-ID 23ec11b10e51a12'
-      }, (err, res, body) ->
+    options = {
+      url: 'https://api.imgur.com/3/gallery/hot/viral/0.json',
+      headers: {
+        'Authorization': 'Client-ID 23ec11b10e51a12'
+      }
+    }
+    request.get(options, (err, res, body) ->
         console.log(body);
         message = ''
         body[0].images.forEach (img) ->
