@@ -19,10 +19,7 @@ module.exports = (robot) ->
       }
     }
     request.get(options, (err, res, body) ->
-        console.log(body);
-        message = ''
-        body[0].images.forEach (img) ->
-          message += img.link + '\n'
+        message = body.data[0].link
         msg.send message
         );
 
