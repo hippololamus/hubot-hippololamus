@@ -23,7 +23,7 @@ module.exports = (robot) ->
     request.get(baseOptions, (err, res, body) ->
       body = JSON.parse(body)
       thePost = body.data[Math.floor(Math.random()*body.data.length)]
-      if typeof thePost.title === 'string' then msg.send thePost.title
+      if typeof thePost.title is 'string' then msg.send thePost.title
       msg.send thePost.link
-      if typeof thePost.description === 'string' then msg.send thePost.description
+      if typeof thePost.description is 'string' then msg.send thePost.description
       );
