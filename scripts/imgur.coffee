@@ -18,8 +18,8 @@ baseOptions = {
 sendBomb = (msg, body) ->
   body = JSON.parse(body)
   if(body and body.data and body.data.length)
-    for i in [0...body.data.length] by (body.data.length / 20)
-      sendPost(msg, body.data[i])
+    for i in [0...4] by (body.data.length / 20)
+      sendPost(msg, body.data[Math.floor(Math.random()*body.data.length)])
   else
     msg.send 'No lols found on imgur ◖㈠ ω ㈠◗'
     
@@ -29,6 +29,7 @@ sendRandomPost = (msg, body) ->
   body = JSON.parse(body)
   thePost = body.data[Math.floor(Math.random()*body.data.length)]
   sendPost(msg, thePost)
+
 
 sendPost = (msg, thePost) ->
   if(!thePost) then return msg.send 'No lols found on imgur ◖㈠ ω ㈠◗'
