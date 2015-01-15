@@ -17,8 +17,11 @@ baseOptions = {
 
 sendBomb = (msg, body) ->
   body = JSON.parse(body)
-  for i in [0...body.data.length] by (body.data.length / 20)
-    sendPost(msg, body.data[i])
+  if(data.body.length)
+    for i in [0...body.data.length] by (body.data.length / 20)
+      sendPost(msg, body.data[i])
+  else
+    msg.send 'No lols found on imgur ◖㈠ ω ㈠◗'
     
   
 
@@ -44,8 +47,8 @@ module.exports = (robot) ->
       sendRandomPost(msg, body);
 
 
-  robot.hear /(.*) bomb/i, (msg) ->
-    console.log "Heard message #{msg.match} bomb"
-    baseOptions.url = "https://api.imgur.com/3/gallery/search/top/?q_exactly=#{msg.match}"
+  robot.respond /(.*) bomb/i, (msg) ->
+    console.log "Heard message #{msg.match[1]} bomb"
+    baseOptions.url = "https://api.imgur.com/3/gallery/search/top/?q_exactly=#{msg.match[1]}"
     request.get baseOptions, (err, res, body) ->
       sendBomb(msg, body);
