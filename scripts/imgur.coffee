@@ -15,15 +15,24 @@ baseOptions = {
       }
     }
 
+sendRandomPost = (msg, body) ->
+  body = JSON.parse(body)
+  thePost = body.data[Math.floor(Math.random()*body.data.length)]
+  if typeof thePost.title is 'string' then msg.send thePost.title
+  msg.send thePost.link
+  if typeof thePost.description is 'string' then msg.send thePost.description
+
+
 module.exports = (robot) ->
 
   robot.hear /front page/i, (msg) ->
     console.log('heard message: front page')
     baseOptions.url = 'https://api.imgur.com/3/gallery/hot/viral/0.json'
-    request.get(baseOptions, (err, res, body) ->
-      body = JSON.parse(body)
-      thePost = body.data[Math.floor(Math.random()*body.data.length)]
-      if typeof thePost.title is 'string' then msg.send thePost.title
-      msg.send thePost.link
-      if typeof thePost.description is 'string' then msg.send thePost.description
-      );
+    request.get baseOptions, (err, res, body) ->
+      sendRandomPost(msg, body);
+
+
+  robot.hear /(.*) bomb/i, (msg) ->
+    baseOptions.url = "https://api.imgur.com/3/gallery/search/top/?q_exactly=#{msg.match}"
+    request.get baseOptions, (err, res, body) ->
+      sendRandomPost(msg, body);
