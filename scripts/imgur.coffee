@@ -17,7 +17,7 @@ baseOptions = {
 
 sendBomb = (msg, body) ->
   body = JSON.parse(body)
-  if(data.body.length)
+  if(body and body.data and body.data.length)
     for i in [0...body.data.length] by (body.data.length / 20)
       sendPost(msg, body.data[i])
   else
