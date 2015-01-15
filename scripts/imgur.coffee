@@ -15,9 +15,20 @@ baseOptions = {
       }
     }
 
+sendBomb = (msg, body) ->
+  body = JSON.parse(body)
+  for i in [0...body.data.length] by (body.data.length / 20)
+    sendPost(msg, body.data[i])
+    
+  
+
 sendRandomPost = (msg, body) ->
   body = JSON.parse(body)
   thePost = body.data[Math.floor(Math.random()*body.data.length)]
+  sendPost(msg, thePost)
+
+sendPost = (msg, thePost) ->
+  if(!thePost) then return msg.send 'No lols found on imgur ◖㈠ ω ㈠◗'
   if typeof thePost.title is 'string' then msg.send thePost.title
   msg.send thePost.link
   if typeof thePost.description is 'string' then msg.send thePost.description
@@ -33,6 +44,7 @@ module.exports = (robot) ->
 
 
   robot.hear /(.*) bomb/i, (msg) ->
+    console.log "Heard message #{msg.match} bomb"
     baseOptions.url = "https://api.imgur.com/3/gallery/search/top/?q_exactly=#{msg.match}"
     request.get baseOptions, (err, res, body) ->
-      sendRandomPost(msg, body);
+      sendBomb(msg, body);
