@@ -29,6 +29,7 @@ sendRandomPost = (msg, body) ->
 
 sendPost = (msg, thePost) ->
   if(!thePost) then return msg.send 'No lols found on imgur ◖㈠ ω ㈠◗'
+  if(thePost.nsfw) then return msg.send 'Image was flagged NSFW ◖㈠ ω ㈠◗'
   if typeof thePost.title is 'string' then msg.send thePost.title
   msg.send thePost.link
   if typeof thePost.description is 'string' then msg.send thePost.description
