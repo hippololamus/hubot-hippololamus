@@ -41,7 +41,7 @@ sendPost = (msg, thePost, cb_) ->
   msg.send thePost.link
   if typeof thePost.description is 'string' then msg.send thePost.description
 
-  if(cb_) then setTimeout (-> cb_() ), 500
+  if(cb_) then setTimeout (-> cb_() ), 1500
 
 
 module.exports = (robot) ->
