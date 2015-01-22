@@ -21,7 +21,9 @@ sendBomb = (msg, body) ->
   queue = []
   if(body and body.data and body.data.length)
     for i in [0...20]
-      if(body.data[i]) then queue.push sendPost(msg, body.data[i])
+      if(body.data[i])
+        queue.push sendPost(msg, body.data[i])
+        queue.push (cb_) -> setTimeout (-> cb_() ), 1500
     async.series(queue);
   else
     msg.send 'No lols found on imgur ◖㈠ ω ㈠◗'
