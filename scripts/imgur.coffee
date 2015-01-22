@@ -7,7 +7,8 @@
 #   Uncomment the ones you want to try and experiment with.
 #
 #   These are from the scripting documentation: https://g ithub.com/github/hubot/blob/master/docs/scripting.md
-request = require('request');
+request = require 'request'
+async = require 'async'
 
 baseOptions = {
       headers: {
@@ -17,9 +18,11 @@ baseOptions = {
 
 sendBomb = (msg, body) ->
   body = JSON.parse(body)
+  queue = []
   if(body and body.data and body.data.length)
-    for i in [0...2]
-      sendPost(msg, body.data[i])
+    for i in [0...20]
+      if(body.data[i]) then queue.push sendPost(msg, body.data[i])
+    async(queue);
   else
     msg.send 'No lols found on imgur ◖㈠ ω ㈠◗'
     
@@ -31,12 +34,14 @@ sendRandomPost = (msg, body) ->
   sendPost(msg, thePost)
 
 
-sendPost = (msg, thePost) ->
+sendPost = (msg, thePost, cb_) ->
   if(!thePost) then return msg.send 'No lols found on imgur ◖㈠ ω ㈠◗'
   if(thePost.nsfw) then return msg.send 'Image was flagged NSFW ◖㈠ ω ㈠◗'
   if typeof thePost.title is 'string' then msg.send thePost.title
   msg.send thePost.link
   if typeof thePost.description is 'string' then msg.send thePost.description
+
+  if(cb_) then setTimeout (-> cb_() ), 500
 
 
 module.exports = (robot) ->
