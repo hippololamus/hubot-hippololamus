@@ -23,7 +23,7 @@ sendBomb = (msg, body) ->
     for i in [0...20]
       if(body.data[i])
         queue.push sendPost(msg, body.data[i])
-        queue.push((cb_) -> setTimeout((-> cb_() ), 1500))
+        queue.push((cb_) -> setTimeout((-> cb_() ), 15000))
     async.series(queue);
   else
     msg.send 'No lols found on imgur ◖㈠ ω ㈠◗'
@@ -43,7 +43,7 @@ sendPost = (msg, thePost, cb_) ->
   msg.send thePost.link
   if typeof thePost.description is 'string' then msg.send thePost.description
 
-  if(cb_) then setTimeout((-> cb_() ), 1500)
+  if(cb_) then setTimeout((-> cb_() ), 15000)
 
 
 module.exports = (robot) ->
