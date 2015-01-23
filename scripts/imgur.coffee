@@ -22,8 +22,7 @@ sendBomb = (msg, body) ->
   if(body and body.data and body.data.length)
     for i in [0...20]
       if(body.data[i])
-        queue.push (cb_) -> sendPost(msg, body.data[i], cb_);
-        queue.push((cb_) -> setTimeout((-> cb_() ), 1100))
+        queue.push sendPost(msg, body.data[i])
     async.series(queue);
   else
     msg.send 'No lols found on imgur ◖㈠ ω ㈠◗'
@@ -37,13 +36,14 @@ sendRandomPost = (msg, body) ->
 
 
 sendPost = (msg, thePost, cb_) ->
-  if(!thePost) then return msg.send 'No lols found on imgur ◖㈠ ω ㈠◗'
-  if(thePost.nsfw) then return msg.send 'Image was flagged NSFW ◖㈠ ω ㈠◗'
-  if typeof thePost.title is 'string' then msg.send thePost.title
-  msg.send thePost.link
-  if typeof thePost.description is 'string' then msg.send thePost.description
-
-  if(cb_) then setTimeout((-> cb_() ), 1100)
+  setTimeout (->
+    if(!thePost) then return msg.send 'No lols found on imgur ◖㈠ ω ㈠◗'
+    if(thePost.nsfw) then return msg.send 'Image was flagged NSFW ◖㈠ ω ㈠◗'
+    if typeof thePost.title is 'string' then msg.send thePost.title
+    msg.send thePost.link
+    if typeof thePost.description is 'string' then msg.send thePost.description
+    if(cb_ ) then cb_()
+    ), 1100
 
 
 module.exports = (robot) ->
