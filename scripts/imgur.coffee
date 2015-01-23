@@ -22,7 +22,7 @@ sendBomb = (msg, body) ->
   if(body and body.data and body.data.length)
     for i in [0...20]
       if(body.data[i])
-        queue.push sendPost(msg, body.data[i])
+        queue.push (cb_) -> sendPost(msg, body.data[i], cb_);
         queue.push((cb_) -> setTimeout((-> cb_() ), 15000))
     async.series(queue);
   else
