@@ -20,10 +20,10 @@ sendBomb = (msg, body) ->
   body = JSON.parse(body)
   queue = []
   if(body and body.data and body.data.length)
-    for i in [0...3]
+    for i in [0...10]
       if(body.data[i])
         queue.push sendPost(msg, body.data[i])
-        queue.push (cb_) -> setTimeout( ( -> cb_() ), 1500 )
+        # queue.push (cb_) -> setTimeout( ( ->  cb_() ), 1500 )
     async.series(queue);
   else
     msg.send 'No lols found on imgur ◖㈠ ω ㈠◗'
@@ -33,18 +33,19 @@ sendBomb = (msg, body) ->
 sendRandomPost = (msg, body) ->
   body = JSON.parse(body)
   thePost = body.data[Math.floor(Math.random()*body.data.length)]
-  sendPost(msg, thePost)
+  sendPost(msg, thePost)()
 
 
-sendPost = (msg, thePost, cb_) ->
-  setTimeout (->
-    if(!thePost) then return msg.send 'No lols found on imgur ◖㈠ ω ㈠◗'
-    if(thePost.nsfw) then return msg.send 'Image was flagged NSFW ◖㈠ ω ㈠◗'
-    if typeof thePost.title is 'string' then msg.send thePost.title
-    msg.send thePost.link
-    # if typeof thePost.description is 'string' then msg.send thePost.description
-    if(cb_ ) then cb_()
-    ), 1100
+sendPost = (msg, thePost) ->
+  return (cb_) ->
+    setTimeout (->
+      if(!thePost) then return msg.send 'No lols found on imgur ◖㈠ ω ㈠◗'
+      if(thePost.nsfw) then return msg.send 'Image was flagged NSFW ◖㈠ ω ㈠◗'
+      if typeof thePost.title is 'string' then msg.send thePost.title
+      msg.send thePost.link
+      # if typeof thePost.description is 'string' then msg.send thePost.description
+      if(cb_ ) then cb_()
+      ), 1100
 
 
 module.exports = (robot) ->
