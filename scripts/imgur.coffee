@@ -20,7 +20,7 @@ sendBomb = (msg, body) ->
   body = JSON.parse(body)
   queue = []
   if(body and body.data and body.data.length)
-    for i in [0...20]
+    for i in [0...3]
       if(body.data[i])
         queue.push sendPost(msg, body.data[i])
         queue.push (cb_) -> setTimeout( ( -> cb_() ), 1500 )
@@ -42,7 +42,7 @@ sendPost = (msg, thePost, cb_) ->
     if(thePost.nsfw) then return msg.send 'Image was flagged NSFW ◖㈠ ω ㈠◗'
     if typeof thePost.title is 'string' then msg.send thePost.title
     msg.send thePost.link
-    if typeof thePost.description is 'string' then msg.send thePost.description
+    # if typeof thePost.description is 'string' then msg.send thePost.description
     if(cb_ ) then cb_()
     ), 1100
 
